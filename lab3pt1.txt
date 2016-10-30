@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+//int num(int number);
+int num(int number, int reverse );
+void main()
+{
+	int number;
+	int r = 0;
+	cout << "enter a n integer";
+	cin >> number;
+	
+
+	/*while (number)
+	{
+		int remainder = number % 10;
+		r= r * 10 + remainder;
+		number =number/ 10;
+
+
+	}
+	cout << "Reversed number = " << r;*/
+
+	cout<<num(number,0);
+
+
+}
+
+
+int num(int number, int reverse)
+{
+	
+	if (number == 0)
+	{
+		return reverse;
+
+	}
+	if (number > 0)
+	{
+		
+		return num(number / 10, ((reverse * 10) + (number%10)));
+
+
+	}
+
+
+}

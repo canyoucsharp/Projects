@@ -1,0 +1,50 @@
+#include <iostream>
+using  namespace std;
+
+
+double recur(double x, int n,int &m);
+void main()
+{
+double x;
+int n;
+int m = 0;
+
+cout << "enter the base" << endl;
+cin >> x;
+cout << "enter the expoonent" << endl;
+cin >> n;
+
+cout << recur(x,n,m) << endl;
+cout << "it took " << m << " multiplications" << endl;
+}
+
+
+
+double recur(double x,int n,int &m)
+{
+	
+	if (n == 0)
+	{
+		m++;
+		return 1;
+		
+	}
+	else
+	{
+		m++;
+		return x * recur(x, n - 1,m);
+		
+	}
+}
+
+/*
+output 
+enter the base
+2
+enter the expoonent
+8
+256
+it took 7 multiplications
+Press any key to continue . . .
+
+

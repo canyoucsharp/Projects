@@ -1,0 +1,374 @@
+#include <iostream>
+using namespace std;
+#include <cmath>
+
+
+
+
+class Polynomial
+
+
+
+{
+private:
+	int size;
+	int *coefficent;
+	int degree;
+	int vofx;
+
+
+public:
+
+	
+
+	Polynomial(int d)
+	{
+		degree = d;
+		size = d + 1;
+		coefficent = new int[size];
+	}
+	
+
+	void createpoly()
+	{
+
+		for (int i = size - 1; i >= 0; i--)
+		{
+
+			cout << "enter the coeficent " << i << ": ";
+			cin >> coefficent[i];
+
+		}
+
+
+
+		cout << "enter the value of x";
+		cin >> vofx;
+
+
+
+
+
+	}
+
+	
+
+	void displayandcomputepoly()
+	{
+
+		/*int td = degree;*/
+		
+		//double sum = 0;
+		double valueofpart = 0;
+		
+		int mul = 1;
+		int z = 1;
+		int sum = coefficent[0];//1,2,3,4///x=2
+					
+	/*	for (int i = 1; i <= degree; i++)
+		{
+		mul = mul* vofx;//mul=2,4,8
+
+		sum += coefficent[z] * mul;//1+2*2=5
+
+		
+		}*/
+		
+		for (int i = size - 1; i >= 0; i--)
+				{
+
+			if (coefficent[i] > 0 && i>0)
+			{
+				/*valueofpart = ((coefficent[i]) * (pow(vofx, i)));
+				sum += valueofpart;*/
+				mul = mul* vofx;//mul=2,4,8
+				
+				sum += coefficent[z] * mul;//1+2*2=5
+			}
+			z++;
+		
+			
+					
+					if (i == 0 && coefficent[i] != 0)
+					cout << "+" << coefficent[i];
+					else if (i == 1 && coefficent[i] != 0)
+					 cout << coefficent[i] << "x";
+					else if (i > 1 && coefficent[i] != 0)
+					{
+						    cout << coefficent[i] << "x^" << i;
+					}
+					if (i > 1 && coefficent[i - 1] != 0 )
+						   cout << "+";
+
+					
+
+
+
+
+			
+
+		}
+		cout << "sums is" << sum << endl;
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+	void  addtwopolys(Polynomial poly1, Polynomial poly2)
+	{
+		
+		if (poly1.degree >= poly2.degree)
+		{
+			int j = poly2.degree;
+			for (int i = degree; i >= 0; i--)
+			{
+
+
+				if (poly1.degree > poly2.degree)
+				{
+
+
+					coefficent[i] = poly1.coefficent[i];
+
+				}
+
+				else if (poly1.degree == poly2.degree)
+				{
+					coefficent[i] = poly1.coefficent[i] + poly2.coefficent[j];
+
+					poly2.degree--;
+					j--;
+
+				}
+
+
+
+				poly1.degree--;
+			}
+		
+			for (int i = poly1.size - 1; i >= 0; i--)
+			{
+
+
+				if (i == 0 && coefficent[i] != 0)
+					cout << "+" << coefficent[i];
+				else if (i == 1 && coefficent[i] != 0)
+					cout << coefficent[i] << "x";
+				else if (i > 1 && coefficent[i] != 0)
+				{
+					cout << coefficent[i] << "x^" << i;
+				}
+				if (i > 1 && coefficent[i - 1] != 0 )
+					cout << "+";
+
+
+
+
+
+
+
+
+			}
+		
+		
+		}
+			
+		else if (poly2.degree > poly1.degree)
+		{
+			if (poly2.degree > poly1.degree)
+			{
+				int j = poly1.degree;
+				for (int i = degree; i >= 0; i--)
+				{
+
+
+					if (poly2.degree > poly1.degree)
+					{
+
+
+						coefficent[i] = poly2.coefficent[i];
+
+					}
+
+					else if (poly1.degree == poly2.degree)
+					{
+						coefficent[i] = poly1.coefficent[j] + poly2.coefficent[i];
+
+						poly1.degree--;
+						j--;
+
+					}
+
+
+
+					poly2.degree--;
+				}
+			
+				//cout << coefficent[degree];
+				
+				for (int i = poly2.size-1; i >= 0; i--)
+				{
+
+					if (i == 0 && coefficent[i] != 0)
+						cout << "+" << coefficent[i];
+					else if (i == 1 && coefficent[i] != 0)
+						cout << coefficent[i] << "x";
+					else if (i > 1 && coefficent[i] != 0)
+					{
+						cout << coefficent[i] << "x^" << i;
+					}
+					if (i > 1 && coefficent[i - 1] != 0)
+						cout << "+";
+
+					/*if (i == 0 && coefficent[i] != 0)
+						cout << "+" << coefficent[i];
+					else if (i == 1 && coefficent[i] != 0)
+						cout << coefficent[i] << "x";
+					else if (i > 1 && coefficent[i] != 0)
+					{
+						cout << coefficent[i] << "x^" << i;
+					}
+					if (i > 1 && coefficent[i - 1] != 0 && coefficent[i] != 0)
+						cout << "+";*/
+
+
+
+
+
+
+
+
+				}
+			
+			
+			
+			}
+		}
+
+
+
+	}
+
+		
+		
+
+			
+
+
+
+
+
+
+
+		
+		
+
+
+
+
+	int* getarray()
+	{
+		return coefficent;
+
+	}
+	int getsize()
+	{
+
+		return size;
+	}
+
+
+
+	int getdegree()
+	{
+		return degree;
+
+	}
+
+	void setvofx()
+	{
+		cout << "enter the value of x";
+		cin >> vofx;
+
+
+	}
+	int getvofx()
+	{
+		return vofx;
+
+	}
+	Polynomial() { delete[] coefficent; }
+
+	
+	
+};
+
+
+
+//void megapoly(Polynomial myp1, Polynomial myp2);
+
+
+void main()
+{
+	
+	int degree;
+	cout << "hello please enter the degree of your first polynomial" << endl;
+	cin >> degree;
+	//size = degree + 1;	//sets the size of the polynomial to be degree+1
+	Polynomial myPolynomial(degree);
+	myPolynomial.createpoly();
+	myPolynomial.displayandcomputepoly();
+
+	cout << "hello please enter the degree of your second polynomial" << endl;
+	cin >> degree;
+	Polynomial myPolynomial_1(degree);
+	myPolynomial_1.createpoly();
+	myPolynomial_1.displayandcomputepoly();
+
+	if (myPolynomial.getdegree() >= myPolynomial_1.getdegree())
+	{
+		degree = myPolynomial.getdegree();
+	}
+	else if (myPolynomial_1.getdegree() > myPolynomial.getdegree())
+	{
+		degree = myPolynomial_1.getdegree();
+	}
+	
+	Polynomial mypoly3(degree);
+
+	
+
+	
+	
+	mypoly3.addtwopolys(myPolynomial, myPolynomial_1);
+
+	system("pause");
+
+	/*mypoly3.addtwopolys(myPolynomial, myPolynomial_1);*/
+
+
+
+
+
+	
+
+
+
+
+}
+
+
+
+//Polynomial::~Polynomial()
+//{
+//	delete[]coefficent;
+//}

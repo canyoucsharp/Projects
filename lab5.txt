@@ -1,0 +1,330 @@
+
+//implementation file
+#include "header.h"
+
+stack::stack(int capacity) {
+	if (capacity <= 0)
+	{
+		cout << "Stack's capacity must be positive" << endl << endl;
+	}
+	else if(capacity >= 0)
+	{
+		cout << " creating an stack with the size of " << capacity << endl << endl;
+		storage = new int[capacity];
+		this->capacity = capacity;
+		top = -1;
+	}
+}
+
+void stack::push(int value, bool &success)
+{
+	success = top <capacity - 1;
+	if (!success)
+	{
+		cout << "Stack is full" << endl << endl;
+	
+	}
+	
+	else if (success)
+	{
+		
+		cout << value << " was pushed to stack" << endl << endl;
+		top++;
+		storage[top] = value;
+		show();
+		
+	}
+}
+
+int stack::peek() {
+	if (top == -1)
+	{
+		cout << "Stack is empty" << endl << endl;
+	}
+	return top;
+}
+
+void stack::pop(int &x, bool &success) {
+	success = (top > -1);
+	
+	if (!success)
+	{
+		cout << "Stack is empty" << endl;
+		x = -1;
+		
+	}
+	else if(success)
+	{
+		x = storage[top];
+		top--;
+		cout << x << " was popped from the stack" << endl << endl;
+	}
+}
+
+bool stack::isEmpty() {
+	return (top == -1);
+}
+
+
+void stack::show()
+{
+	cout << "the stack contains";
+	for (int i = 0; i <= top; i++)
+	{
+		cout << "[" <<storage[i]<<"]";
+	}
+	cout << endl << endl;
+}
+
+
+stack:: ~stack() {
+	delete[] storage;
+}
+bool stack::isNumber(char x)
+{
+	if (x >= '0'&& x <= '9')
+		return true;
+	else
+		return false;
+
+}
+bool stack::isOperator(char x)
+{
+
+	if ((x == '+') || (x == '-') || (x == '*') || (x == '/'))
+	{
+		cout << "detecting an operator" << x << endl << endl;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int stack:: doMath(char operation,int operand1,int operand2)
+{
+	if (operation == '+')
+	{
+		return (operand1 + operand2);
+
+
+	}
+	else if (operation == '-')
+	{
+		return (operand1 - operand2);
+
+	}
+	else if (operation == '*')
+	{
+		return (operand1*operand2);
+
+	}
+	else if (operation == '/')
+	{
+		return (operand1/operand2);
+
+	}
+
+	else
+	{
+		cout << "please enter a valid string " << endl << endl;
+		return -1;
+	}
+
+}
+
+
+int stack::converttoPostfix(string expression)
+{
+	
+	bool success;
+	int operand1;
+	int operand2;
+	int result;
+	
+	
+	
+	for (int i = 0; i < expression.length(); i++)
+	{
+		
+		
+		if (expression[i] == ' ' || expression[i] == ',')//if the expression has a space or a comma ignore rest of loop body and continue to the next spot in string
+		{
+			continue;
+		}
+
+		else if (isOperator(expression[i]))// if the expression is a valid math operator lets  use it to do math
+		{
+			
+			pop(operand2, success);
+			pop(operand1, success);
+			result = doMath(expression[i], operand1, operand2);
+			push(result, success);
+			
+
+		}
+		else if (isNumber(expression[i]))//if it is a number we need to find how many digits it has and convert its value from ascii
+		{
+			int operand = 0;
+			
+			int counter;
+			
+			while ((i < expression.length()) && (isNumber(expression[i])))
+			{
+				operand = ((operand * 10) + (expression[i] - '0'));
+				i++;
+			}
+			i - 1;
+			push(operand, success);
+
+		}
+		
+	}
+
+	return top;
+
+}
+
+void stack:: emptystack()
+{
+	bool success;
+	int x;
+
+	while (top > -1)
+	{
+		pop(x, success);
+
+	}
+}
+
+void stack::inputanddisplay()
+{
+
+	string expression;		
+	cout << "enter postfix expression " << endl << endl;
+	getline(cin, expression);
+	int result = converttoPostfix(expression);
+	cout << "emptying stack" << endl<< endl;
+	emptystack();
+
+		
+	
+
+}
+
+
+bool stack::areyoufinished()
+{
+
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+	string finished;
+
+	
+		cout << "are you finished enter yes or no ";
+		
+		getline(cin, finished);
+		
+		cout << endl << endl;
+		
+		if (finished == "yes")
+		{
+			return true;
+		}
+		if (finished == "no")
+		{
+			return false;
+		}
+		else if (finished != "yes" && finished != "no")
+		{
+
+			cout << "please enter a valid input" << endl << endl;
+			areyoufinished();
+		}
+
+	}
+
+
+// main file
+#include "Header.h"
+
+
+
+
+
+
+void main()
+{
+	bool success;
+	int x;
+	string finished = "no";
+	stack mystack(20);
+	
+	mystack.inputanddisplay();
+	
+	while (!mystack.areyoufinished())
+	{
+		mystack.inputanddisplay();
+
+	}
+		
+
+
+
+
+	
+
+	
+		
+		
+		
+
+	system("pause");
+
+}
+
+// header file 
+#pragma once
+#include <iostream>
+using namespace std;
+#include <string>
+
+
+
+class stack
+{
+
+
+private:
+	int top;
+	int capacity;
+	int *storage;
+public:
+	//stack functions
+	stack(int capacity);
+	void push(int value, bool &success);
+	int peek();
+	void pop(int &a, bool &success);
+	bool isEmpty();
+	void show();
+	void emptystack();
+	~stack();
+
+	//postfix functions
+	bool isNumber(char x);
+	bool isOperator(char x);
+	int doMath(char operation, int operand1, int operand2);
+	int converttoPostfix(string expression);
+	void inputanddisplay();
+	bool areyoufinished();
+
+
+};
+
+
+
+
+
+
+
+

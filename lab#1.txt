@@ -1,0 +1,179 @@
+//Michael Kholodovsky 
+//Lab #1
+//Csc 326
+
+main.cpp 
+#include "hfile.h"
+
+
+void main()
+
+{
+
+	programmers myp[10];
+	
+	ifstream  read;
+	ifstream read1;
+	
+	read.open("ps.txt");
+	readfile(read, myp);
+	print(myp);
+	
+	read.close();
+	
+
+	read.open("ps1.txt");
+	readfile(read, myp);
+	print(myp);
+
+	read.close();
+
+
+}
+
+#pragma once
+#ifndef _myfile
+#define _myfile
+
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+
+struct programmers
+{
+	int id;
+	int linesofcode;
+	int linesofcomments;
+	//bool winner;
+
+
+};
+
+
+
+
+
+
+void readfile(istream & read,programmers myprogrammers[])
+{
+
+	int id;
+	int winner;
+	int linesofcode;
+	int linesofcomments;
+
+	std::cout << "programmer" << " " << " lines of code" << " lines of comments" << endl;
+	
+
+	for (int i = 0; i < 10; i++)
+	{
+		myprogrammers[i].id = 0;
+		myprogrammers[i].linesofcode = 0;
+		myprogrammers[i].linesofcomments = 0;
+
+	}
+	
+	while (!read.eof())
+	{
+
+		read >> id;
+		read >> linesofcode;
+		read >> linesofcomments;
+		std::cout << left << setw(15) << id << " ";
+		std::cout << left << setw(15) << linesofcode << " ";
+		std::cout << left << setw(15) << linesofcomments << endl;
+				
+
+		myprogrammers[id-1].id = id;
+		myprogrammers[id-1].linesofcode += linesofcode;
+		myprogrammers[id-1].linesofcomments += linesofcomments;
+
+		
+
+		
+		if (myprogrammers[id-1].linesofcode > 1000)
+		{
+
+			
+			linesofcode = myprogrammers[id - 1].linesofcode;
+			std::cout <<"programmer"<< myprogrammers[id - 1].id << " is the winner";
+			int sum = 0;
+			for (int i = 0; i < 10; i++)
+			{
+
+				sum += myprogrammers[i].linesofcode;
+				if (sum >linesofcode)
+				{
+					std::cout << endl;
+					std::cout << "It took programmers 1 through " << i + 1 << " to produce more than the winner" << endl;
+					std::cout << " which is" << sum << endl;
+					break;
+				}
+
+			}
+			
+			
+			
+			
+			
+			
+			
+			break;
+		
+		
+		
+		
+		
+		}
+	
+
+
+	}
+		
+	
+	
+	}
+
+
+
+
+
+void print(programmers myprogrammers[])
+{
+	std::cout << "programmer" << " " << " lines of code" << " lines of comments" << endl;
+	std::cout << endl;
+
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout <<left<<setw(15) << myprogrammers[i].id << " ";
+		std::cout <<left<< setw(15) << myprogrammers[i].linesofcode << " ";
+		std::cout <<left<< setw(15) << myprogrammers[i].linesofcomments << endl;
+
+
+	}
+
+
+}
+
+
+
+	
+	
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+#endif _myfile

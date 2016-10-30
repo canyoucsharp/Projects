@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+
+	const int max = 10;
+	class Chain
+	{
+	public:
+		Chain() :size(0)
+		{
+
+		}
+		
+		
+		void printall();
+		void delete_(int k, int&x, bool&success);//delete element at position with index k and save it in x;
+		void insert(int k, int x, bool &success);//insert element x at position with index k
+		//void swap(int);
+		
+	private:
+		int list[max];
+		int size;
+		
+	};
+
+	Chain mylist;
+	bool flag;
+	int y;
+
+
+	void Chain::insert(int k, int x, bool &success)
+	{
+		if (size < max&& k<=size)
+		{
+		
+			for (int i =size-1; i >= k; i--)
+			{
+				list[i + 1] = list[i];
+
+			}
+
+			success = true;//set sucess to be true
+			list[k] = x;//insert the item into the list
+			size++;//increase the size
+			cout << " the size is" << size << endl;
+
+
+		}
+
+
+
+	}
+
+	void Chain::printall()
+	{
+		for (int i = 0; i <size; i++)
+		{
+		
+			
+				cout << list[i] << " ";
+
+			
+		}
+		cout << endl;
+	}
+
+
+	void Chain::delete_(int k,int &x,bool & success)
+	{
+		if (k <= size&&k>=0&&size>0)
+		{
+			success = true;
+			x = list[k];
+			for (int i = k; i < size; i++)
+			{
+				list[i] = list[i + 1];
+			}
+			
+			size--;
+		}
+		cout << " the size is" << size << endl;
+
+	}
+
+	void main()
+	{
+		bool success = false;
+		int x = NULL;
+		
+		mylist.insert(0, 2, success);
+		mylist.insert(1, 5, success);
+		mylist.insert(2, 8, success);
+		mylist.insert(3, 10, success);
+		mylist.insert(4, 12, success);
+		mylist.insert(5, 18,success);
+		mylist.insert(6, 21, success);
+		mylist.insert(2, 6, success);
+		mylist.insert(9, 25, success);
+	
+		
+		mylist.printall();
+		
+
+	//	2 5 6 8 10 12 18 21 25
+	
+		
+		mylist.delete_(0, x, success);
+		mylist.delete_(8, x ,success);
+
+		
+
+	
+
+		mylist.printall();
+
+		
+		//	5 6 8 10 12 18 21
+		
+
+	}
+
+
+	

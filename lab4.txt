@@ -1,0 +1,326 @@
+#include "Header.h"
+
+//implemntation
+LinkedList::LinkedList() :start(NULL),length(0)
+{
+
+}
+
+bool LinkedList::isempty()
+{
+	if (length == 0)
+	{
+		return true;
+	}
+	else
+		return false;
+
+}
+//O(1)
+int LinkedList::getlength()
+{
+	return length;
+}
+//O(n)
+void LinkedList::insert(int x)
+{
+
+	Node *temp = new Node;
+	temp->data = x;
+	
+
+
+	if ((isempty()) || (x <= start->data))//if the list is empty or the item is the smallest insert at begining
+	{
+
+		temp->next = start;
+		start = temp;
+		length++;
+		return;
+	}
+
+	Node *left = start;
+	Node * right = start->next;
+
+		while (right)// else if it fits somewhere in the list insert it there
+		{
+			
+			if (((left->data <= x) && (right->data >= x)))
+			{
+				temp->next = right;
+				left->next = temp;
+				length++;
+				return;
+				}
+		
+
+			left = left->next;
+			right = right->next;
+			
+		}
+	
+		temp->next = NULL;
+		left->next = temp;// else if the item is the greatest insert in the end of the list
+		length++;
+
+
+	
+	}
+
+void LinkedList::insertwodup(int x)
+{
+
+	Node *temp = new Node;
+	temp->data = x;
+
+
+
+	if ((isempty()) || (x < start->data))//if the list is empty or the item is the smallest insert at begining
+	{
+
+		temp->next = start;
+		start = temp;
+		length++;
+		return;
+	}
+
+	Node *left = start;
+	Node * right = start->next;
+
+	while (right)// else if it fits somewhere in the list insert it there
+	{
+
+		if (((left->data < x) && (right->data > x)))//insert if the element fits
+		{
+			temp->next = right;
+			left->next = temp;
+			length++;
+			return;
+		}
+
+
+		left = left->next;
+		right = right->next;
+
+	}
+
+	if (x > left->data)
+	{
+		temp->next = NULL;
+
+		left->next = temp;// else if the item is the greatest insert in the end of the list
+		length++;
+		
+	}
+
+
+	
+
+
+}
+void LinkedList::deleteelement(int k, int&x, bool &success)
+{
+	int pos = 1;
+	Node *temp = start;
+	
+		if (isempty())
+		{
+			x = NULL;
+			success = false;
+		}
+
+		else if (k == 1)// if k is the head delete it
+		{
+			start = start->next;
+			delete temp;
+			success = true;
+			x = start->data;
+			length--;
+		}
+		else if(k>1)  //traverse the list till we find what we need
+		{
+			while (temp->next)
+			{
+				if ((pos + 1) == k)// if the next element is = to the one we need delete it
+				{
+					temp->next = temp->next->next;
+					success = true;
+					x = temp->next->data;
+					length--;
+				}
+				
+				pos++;
+				temp = temp->next;
+			}
+		}
+		else
+		{
+			success = false;
+			x = NULL;
+
+		}
+	}
+
+
+bool LinkedList::find(int k, int &x)
+{
+	Node *temp = start;
+	int pos = 1;
+
+	while (pos<=length)
+	{
+		if (pos == k)
+		{
+			x = temp->data;
+			return true;
+			
+		}
+		temp = temp->next;
+		pos++;
+
+	}
+
+	return false;
+
+
+}
+
+int LinkedList:: searchsortedlist(int key)
+{
+	Node *temp = start;
+	int pos = 1;
+	while (start != NULL)
+	{
+		if (temp->data == key)
+		{
+			return pos;
+		}
+		else if (key < temp->data)
+			return NULL;
+		else
+		{
+			    pos++;
+				temp = temp->next;
+		}
+	}
+	return NULL;
+}
+
+void LinkedList::show()
+{
+	Node *temp;
+	temp = start;
+	while (temp != NULL)
+	{
+		cout << temp->data << endl;
+		temp = temp->next;
+	}
+	cout << endl;
+}
+
+
+LinkedList::~LinkedList()
+{
+	Node *temp;
+	while (start != NULL)
+	{
+		temp = start;
+		start = start->next;
+		delete temp;
+	}
+	length = 0;
+	
+}
+
+
+
+
+//header
+#pragma once
+#ifndef _linked
+#define  _linked
+#include <iostream>
+using namespace std;
+
+class LinkedList
+{
+public:
+
+	LinkedList();
+	bool isempty();
+	int getlength();
+	void insert(int x);
+	void insertwodup(int x);
+	void show();
+	bool find(int k, int &x);
+	int searchsortedlist(int key);
+	void deleteelement(int k, int&x, bool &success);//delete the kth element
+	~LinkedList();
+
+
+
+
+//source
+
+#include "Header.h"
+
+
+void main()
+{
+	bool success;
+	int x;
+
+	LinkedList mylist;
+	
+	//part1
+	/*mylist.insert(5);
+	mylist.insert(7);
+	mylist.insert(9);
+	mylist.insert(11);
+	mylist.insert(5);
+
+	mylist.show();
+	
+	mylist.insert(7);
+	
+	mylist.show();
+	
+	mylist.find(3, x);
+	
+	cout << "the length of the  list is" << mylist.getlength() << endl;
+	
+	mylist.deleteelement(mylist.searchsortedlist(7) , x, success);
+	mylist.deleteelement(mylist.searchsortedlist(7), x, success);
+	mylist.show();
+	mylist.searchsortedlist(7);*/
+
+	//part2
+	mylist.insertwodup(5);
+	mylist.insertwodup(7);
+	mylist.insertwodup(1);
+	mylist.insertwodup(9);
+	mylist.insertwodup(11);
+	mylist.insertwodup(5);
+
+	mylist.show();
+	mylist.insertwodup(3);
+
+	mylist.insertwodup(7);
+
+	mylist.show();
+
+	mylist.find(3, x);
+	cout << "the third element is " << x;
+
+	cout << "the length of the  list is" << mylist.getlength() << endl;
+
+	mylist.deleteelement(mylist.searchsortedlist(7), x, success);
+	mylist.deleteelement(mylist.searchsortedlist(7), x, success);
+	mylist.show();
+	mylist.searchsortedlist(7);
+
+	
+
+	
+	
+}
